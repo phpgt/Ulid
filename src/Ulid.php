@@ -9,7 +9,7 @@ class Ulid implements Stringable {
 
 	private float $timestamp;
 
-	public function __construct(int $init = null) {
+	public function __construct(float|int $init = null) {
 		if(!is_null($init)) {
 			$timestamp = $init;
 		}
