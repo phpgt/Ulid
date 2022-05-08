@@ -22,3 +22,15 @@ This solves the problems exposed with working with auto-incrementing integer pri
 <a href="http://www.php.gt/ulid" target="_blank">
 	<img src="https://badge.status.php.gt/ulid-docs.svg" alt="PHP.Gt/Ulid documentation" />
 </a>
+
+## Example usage:
+
+```php
+use Gt\Ulid\Ulid;
+
+$exampleDataSource->create(new Person(
+	new Ulid(),
+	name: "Cody",
+	age: 5,
+));
+```
