@@ -45,4 +45,15 @@ class UlidTest extends TestCase {
 			self::assertSame(Ulid::TOTAL_LENGTH, strlen($sut));
 		}
 	}
+
+	public function testToString_containsNoAmbiguousCharacters():void {
+		$skipCharacters = ["I", "L", "O", "U"];
+		for($i = 0; $i < 1_000; $i++) {
+			$sut = new Ulid();
+			foreach($skipCharacters as $char) {
+				echo $sut, PHP_EOL;
+				self::assertStringNotContainsString($char, $sut);
+			}
+		}
+	}
 }
