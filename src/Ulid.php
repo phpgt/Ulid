@@ -8,6 +8,7 @@ class Ulid implements Stringable {
 	const TIMESTAMP_LENGTH = 10;
 
 	private float $timestamp;
+	private string $randomString;
 
 	public function __construct(float|int $init = null) {
 		if(!is_null($init)) {
@@ -18,6 +19,14 @@ class Ulid implements Stringable {
 		}
 
 		$this->timestamp = $timestamp;
+
+		$this->randomString = "";
+		for($i = 0; $i < self::TOTAL_LENGTH - self::TIMESTAMP_LENGTH; $i++) {
+			$rnd = random_int(0, 31);
+			$this->randomString .= $this->base32(
+				$rnd
+			);
+		}
 	}
 
 	public function __toString():string {
@@ -45,15 +54,7 @@ class Ulid implements Stringable {
 	}
 
 	public function getRandomString():string {
-		$string = "";
-		for($i = 0; $i < self::TOTAL_LENGTH - self::TIMESTAMP_LENGTH; $i++) {
-			$rnd = random_int(0, 31);
-			$string .= $this->base32(
-				$rnd
-			);
-		}
-
-		return strtoupper($string);
+		return $this->randomString;
 	}
 
 	private function base32(int $number):string {
