@@ -56,4 +56,11 @@ class UlidTest extends TestCase {
 			}
 		}
 	}
+
+	public function testToString_sameEachTime():void {
+		$sut = new Ulid();
+		$string1 = (string)$sut;
+		$string2 = (string)$sut;
+		self::assertSame($string1, $string2);
+	}
 }
