@@ -4,13 +4,17 @@ namespace Gt\Ulid;
 use Stringable;
 
 class Ulid implements Stringable {
-	const TOTAL_LENGTH = 20;
-	const TIMESTAMP_LENGTH = 10;
+	const DEFAULT_TOTAL_LENGTH = 20;
+	const DEFAULT_TIMESTAMP_LENGTH = 10;
 
 	private float $timestamp;
 	private string $randomString;
 
-	public function __construct(float|int $init = null) {
+	public function __construct(
+		float|int $init = null,
+		private int $length = self::DEFAULT_TOTAL_LENGTH,
+		private int $timestampLength = self::DEFAULT_TIMESTAMP_LENGTH,
+	) {
 		if(!is_null($init)) {
 			$timestamp = $init;
 		}
@@ -21,7 +25,7 @@ class Ulid implements Stringable {
 		$this->timestamp = $timestamp;
 
 		$this->randomString = "";
-		for($i = 0; $i < self::TOTAL_LENGTH - self::TIMESTAMP_LENGTH; $i++) {
+		for($i = 0; $i < $this->length - $this->timestampLength; $i++) {
 			$rnd = random_int(0, 31);
 			$this->randomString .= $this->base32(
 				$rnd
@@ -45,11 +49,15 @@ class Ulid implements Stringable {
 	public function getTimestampString():string {
 		$t = round($this->timestamp * 1000);
 		$base32Timestamp = $this->base32((int)$t);
-		return str_pad(
-			$base32Timestamp,
-			self::TIMESTAMP_LENGTH,
-			"0",
-			STR_PAD_LEFT
+		return substr(
+			str_pad(
+				$base32Timestamp,
+				$this->timestampLength,
+				"0",
+				STR_PAD_LEFT
+			),
+			0,
+			$this->timestampLength,
 		);
 	}
 

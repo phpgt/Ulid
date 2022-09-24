@@ -42,7 +42,7 @@ class UlidTest extends TestCase {
 		// Testing multiple times in case randomness causes different length strings.
 		for($i = 0; $i < 1_000; $i++) {
 			$sut = (string)(new Ulid(0));
-			self::assertSame(Ulid::TOTAL_LENGTH, strlen($sut));
+			self::assertSame(Ulid::DEFAULT_TOTAL_LENGTH, strlen($sut));
 		}
 	}
 
@@ -62,5 +62,23 @@ class UlidTest extends TestCase {
 		$string1 = (string)$sut;
 		$string2 = (string)$sut;
 		self::assertSame($string1, $string2);
+	}
+
+	public function testConstruct_setLength():void {
+		for($i = 0; $i < 10; $i++) {
+			$length = rand(10, 100);
+			$sut = new Ulid(length: $length);
+			self::assertSame($length, strlen($sut));
+		}
+	}
+
+	public function testConstruct_setTimestampLength():void {
+		for($i = 0; $i < 10; $i++) {
+			$tLength = rand(5, 10);
+			$sut = new Ulid(timestampLength: $tLength);
+			echo $sut, PHP_EOL;
+			$tString = $sut->getTimestampString();
+			self::assertSame($tLength, strlen($tString));
+		}
 	}
 }
