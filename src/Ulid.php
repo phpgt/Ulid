@@ -67,6 +67,9 @@ class Ulid implements Stringable {
 
 	private function base32(int $number):string {
 		$skipCharacters = ["i", "l", "o", "u"];
+		if($number < 0) {
+			$number = -$number;
+		}
 		$converted = base_convert((string)$number, 10, 32);
 
 		for($i = 0, $len = strlen($converted); $i < $len; $i++) {
