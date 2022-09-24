@@ -51,7 +51,6 @@ class UlidTest extends TestCase {
 		for($i = 0; $i < 1_000; $i++) {
 			$sut = new Ulid();
 			foreach($skipCharacters as $char) {
-				echo $sut, PHP_EOL;
 				self::assertStringNotContainsString($char, $sut);
 			}
 		}
@@ -76,7 +75,6 @@ class UlidTest extends TestCase {
 		for($i = 0; $i < 10; $i++) {
 			$tLength = rand(5, 10);
 			$sut = new Ulid(timestampLength: $tLength);
-			echo $sut, PHP_EOL;
 			$tString = $sut->getTimestampString();
 			self::assertSame($tLength, strlen($tString));
 		}
