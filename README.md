@@ -10,10 +10,10 @@ This solves the problems exposed with working with auto-incrementing integer pri
 <a href="https://github.com/PhpGt/Ulid/actions" target="_blank">
 	<img src="https://badge.status.php.gt/ulid-build.svg" alt="Build status" />
 </a>
-<a href="https://scrutinizer-ci.com/g/PhpGt/Ulid" target="_blank">
+<a href="https://app.codacy.com/gh/PhpGt/Ulid" target="_blank">
 	<img src="https://badge.status.php.gt/ulid-quality.svg" alt="Code quality" />
 </a>
-<a href="https://scrutinizer-ci.com/g/PhpGt/Ulid" target="_blank">
+<a href="https://app.codecov.io/gh/PhpGt/Ulid" target="_blank">
 	<img src="https://badge.status.php.gt/ulid-coverage.svg" alt="Code coverage" />
 </a>
 <a href="https://packagist.org/packages/PhpGt/Ulid" target="_blank">
