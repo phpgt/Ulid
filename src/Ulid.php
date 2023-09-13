@@ -1,6 +1,7 @@
 <?php
 namespace Gt\Ulid;
 
+use DateTime;
 use Stringable;
 
 class Ulid implements Stringable {
@@ -94,5 +95,11 @@ class Ulid implements Stringable {
 		}
 
 		return strtoupper($converted);
+	}
+
+	public function getDateTime():DateTime {
+		$dateTime = new DateTime();
+		$dateTime->setTimestamp($this->timestamp);
+		return $dateTime;
 	}
 }
