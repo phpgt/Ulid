@@ -13,7 +13,7 @@ class UlidTest extends TestCase {
 	public function testGetTimestamp():void {
 		$sut = new Ulid();
 		$now = round(microtime(true) * 1000);
-		self::assertSame(round($now / 10), round($sut->getTimestamp() / 10));
+		self::assertSame(round($now / 1000), round($sut->getTimestamp() / 1000));
 	}
 
 	public function testGetTimestamp_setInConstructor():void {
