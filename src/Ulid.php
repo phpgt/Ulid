@@ -47,8 +47,8 @@ class Ulid implements Stringable {
 	}
 
 	public function getTimestampString():string {
-		$t = round($this->timestamp * 1000);
-		$base32Timestamp = $this->base32((int)$t);
+		$timestamp = round($this->timestamp * 1000);
+		$base32Timestamp = $this->base32((int)$timestamp);
 		return substr(
 			str_pad(
 				$base32Timestamp,
