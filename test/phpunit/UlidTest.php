@@ -1,19 +1,23 @@
 <?php
 namespace Gt\Ulid\Test;
 
-use DateTime;
 use Gt\Ulid\Ulid;
 use PHPUnit\Framework\TestCase;
 
 class UlidTest extends TestCase {
+	public function testGetPrefix():void {
+		$sut = new Ulid("customer");
+		self::assertStringStartsWith("CUSTOMER_", $sut);
+	}
+
 	public function testGetTimestamp():void {
 		$sut = new Ulid();
-		$timestamp = microtime(true);
-		self::assertSame(round($timestamp), round($sut->getTimestamp()));
+		$now = round(microtime(true) * 1000);
+		self::assertSame(round($now / 1000), round($sut->getTimestamp() / 1000));
 	}
 
 	public function testGetTimestamp_setInConstructor():void {
-		$timestamp = (float)strtotime("5th April 1988");
+		$timestamp = strtotime("5th April 1988");
 		$sut = new Ulid(timestamp: $timestamp);
 		self::assertSame($timestamp, $sut->getTimestamp());
 	}
@@ -83,14 +87,14 @@ class UlidTest extends TestCase {
 
 	public function testConstruct_prefix():void {
 		$sut = new Ulid("customer");
-		self::assertStringStartsWith("customer_", $sut);
+		self::assertStringStartsWith("CUSTOMER_", $sut);
 		self::assertGreaterThan(strlen("customer_") + 10, strlen($sut));
 	}
 
-	public function testGetDateTime():void {
-		$sut = new Ulid();
-		$dateTime = $sut->getDateTime();
-		$now = new DateTime();
-		self::assertSame($now->format("Y-m-d H:i:s"), $dateTime->format("Y-m-d H:i:s"));
+	public function testConstruct_existingUlid():void {
+		$existingUlid = new Ulid();
+		$existingString = (string)$existingUlid;
+		$sut = new Ulid(init: $existingString);
+		self::assertSame($existingString, (string)$sut);
 	}
 }
