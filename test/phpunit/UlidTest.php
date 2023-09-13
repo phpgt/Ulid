@@ -1,6 +1,7 @@
 <?php
 namespace Gt\Ulid\Test;
 
+use DateTime;
 use Gt\Ulid\Ulid;
 use PHPUnit\Framework\TestCase;
 
@@ -84,5 +85,12 @@ class UlidTest extends TestCase {
 		$sut = new Ulid("customer");
 		self::assertStringStartsWith("customer_", $sut);
 		self::assertGreaterThan(strlen("customer_") + 10, strlen($sut));
+	}
+
+	public function testGetDateTime():void {
+		$sut = new Ulid();
+		$dateTime = $sut->getDateTime();
+		$now = new DateTime();
+		self::assertSame($now->format("Y-m-d H:i:s"), $dateTime->format("Y-m-d H:i:s"));
 	}
 }
