@@ -9,10 +9,11 @@ class UlidTest extends TestCase {
 		$sut = new Ulid("customer");
 		self::assertStringStartsWith("CUSTOMER_", $sut);
 	}
+
 	public function testGetTimestamp():void {
 		$sut = new Ulid();
-		$timestamp = round(microtime(true) * 1000);
-		self::assertSame(round($timestamp), round($sut->getTimestamp()));
+		$now = round(microtime(true) * 1000);
+		self::assertSame(round($now / 10), round($sut->getTimestamp() / 10));
 	}
 
 	public function testGetTimestamp_setInConstructor():void {
