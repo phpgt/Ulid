@@ -11,14 +11,12 @@ class Ulid implements Stringable {
 	private string $randomString;
 
 	public function __construct(
-		float|int $init = null,
+		private ?string $prefix = null,
+		float|int $timestamp = null,
 		private int $length = self::DEFAULT_TOTAL_LENGTH,
 		private int $timestampLength = self::DEFAULT_TIMESTAMP_LENGTH,
 	) {
-		if(!is_null($init)) {
-			$timestamp = $init;
-		}
-		else {
+		if(is_null($timestamp)) {
 			$timestamp = microtime(true);
 		}
 
@@ -27,19 +25,31 @@ class Ulid implements Stringable {
 		$this->randomString = "";
 		for($i = 0; $i < $this->length - $this->timestampLength; $i++) {
 			$rnd = random_int(0, 31);
-			$this->randomString .= $this->base32(
-				$rnd
-			);
+			$this->randomString .= $this->base32($rnd);
 		}
 	}
 
 	public function __toString():string {
 		$timestampString = $this->getTimestampString();
 		$randomString = $this->getRandomString();
-		return implode("", [
+
+		$string = implode("", [
 			$timestampString,
 			$randomString,
 		]);
+
+		if($this->prefix) {
+			$string = implode("_", [
+				$this->prefix,
+				$string,
+			]);
+		}
+
+		return $string;
+	}
+
+	public function getPrefix():?string {
+		return $this->prefix;
 	}
 
 	public function getTimestamp():float {
