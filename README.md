@@ -1,7 +1,7 @@
 Unique, lexicographically sortable identifiers.
 ===============================================
 
-Create a `new Ulid()` anywhere in your application, and you have a stringable object that can be used as the primary key in a database. Ulid strings look something like `01G2J6MYN0PGC5Q21W9C`. They are cryptographically pseudo-random, and sort so that newer Ulids compare "greater than" older Ulids.
+Create a `new Ulid()` anywhere in your application, and you have a stringable object that can be used as the primary key in a database. Ulid strings look something like `01G2J6MYN0PGC5Q21W9C` or can be prefixed with a type like `CUSTOMER_01G2J6MYN0PGC5Q21W9C`. They are cryptographically pseudo-random, and sort so that newer Ulids compare "greater than" older Ulids.
 
 This solves the problems exposed with working with auto-incrementing integer primary keys, which are predictable and difficult to work with in distributed databases.
 
@@ -29,7 +29,7 @@ This solves the problems exposed with working with auto-incrementing integer pri
 use Gt\Ulid\Ulid;
 
 $exampleDataSource->create(new Person(
-	new Ulid(),
+	new Ulid("pet"),
 	name: "Cody",
 	age: 5,
 ));
