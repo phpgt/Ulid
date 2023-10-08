@@ -108,4 +108,12 @@ class UlidTest extends TestCase {
 			$sut->getDateTime()->getTimestamp()
 		);
 	}
+
+	public function testGetDateTime_constructorInit():void {
+		$dateTimeString = "1988-05-04 17:24";
+		$knownUlid = new Ulid(timestamp: strtotime($dateTimeString) * 1000);
+
+		$sut = new Ulid(init: $knownUlid);
+		self::assertSame($dateTimeString, $sut->getDateTime()->format("Y-m-d H:i"));
+	}
 }
