@@ -1,6 +1,7 @@
 <?php
 namespace Gt\Ulid;
 
+use DateTime;
 use Stringable;
 
 class Ulid implements Stringable {
@@ -89,4 +90,10 @@ class Ulid implements Stringable {
 	public function getRandomString():string {
 		return $this->randomString;
 	}
+
+	public function getDateTime():DateTime {
+		$timestamp = $this->getTimestamp() / 1000;
+		return new DateTime("@" . $timestamp);
+	}
+
 }
