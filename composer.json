@@ -4,7 +4,7 @@
 	"type": "library",
 
 	"require": {
-		"php": ">=8.0"
+		"php": ">=8.1"
 	},
 
 	"require-dev": {
@@ -27,13 +27,27 @@
 
 	"autoload": {
 		"psr-4": {
+			"GT\\Ulid\\": "./src",
 			"Gt\\Ulid\\": "./src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Gt\\Ulid\\Test\\": "./test/phpunit"
+			"GT\\Ulid\\Test\\": "./test/phpunit"
 		}
+	},
+
+	"scripts": {
+		"phpunit": "vendor/bin/phpunit --configuration phpunit.xml",
+		"phpstan": "vendor/bin/phpstan analyse --level 6 src",
+		"phpcs": "vendor/bin/phpcs src --standard=phpcs.xml",
+		"phpmd": "vendor/bin/phpmd src/ text phpmd.xml",
+		"test": [
+			"@phpunit",
+			"@phpstan",
+			"@phpcs",
+			"@phpmd"
+		]
 	},
 
 	"funding": [

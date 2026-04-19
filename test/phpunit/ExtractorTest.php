@@ -1,8 +1,8 @@
 <?php
-namespace Gt\Ulid\Test;
+namespace GT\Ulid\Test;
 
-use Gt\Ulid\Extractor;
-use Gt\Ulid\Ulid;
+use GT\Ulid\Extractor;
+use GT\Ulid\Ulid;
 use PHPUnit\Framework\TestCase;
 
 class ExtractorTest extends TestCase {

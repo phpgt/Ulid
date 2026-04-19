@@ -1,5 +1,5 @@
 <?php
-namespace Gt\Ulid;
+namespace GT\Ulid;
 
 use DateTime;
 use Stringable;
@@ -14,10 +14,10 @@ class Ulid implements Stringable {
 
 	public function __construct(
 		private ?string $prefix = null,
-		int $timestamp = null,
+		?int $timestamp = null,
 		private int $length = self::DEFAULT_TOTAL_LENGTH,
 		private int $timestampLength = self::DEFAULT_TIMESTAMP_LENGTH,
-		string $init = null,
+		?string $init = null,
 	) {
 		$this->base32 = new Base32();
 
