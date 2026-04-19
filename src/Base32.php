@@ -1,5 +1,5 @@
 <?php
-namespace Gt\Ulid;
+namespace GT\Ulid;
 
 class Base32 {
 	public function __construct(

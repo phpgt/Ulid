@@ -26,7 +26,7 @@ This solves the problems exposed with working with auto-incrementing integer pri
 ## Example usage:
 
 ```php
-use Gt\Ulid\Ulid;
+use GT\Ulid\Ulid;
 
 $exampleDataSource->create(new Person(
 	new Ulid("pet"),

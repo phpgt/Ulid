@@ -1,8 +1,8 @@
 <?php
-namespace Gt\Ulid\Test;
+namespace GT\Ulid\Test;
 
 use DateTime;
-use Gt\Ulid\Ulid;
+use GT\Ulid\Ulid;
 use PHPUnit\Framework\TestCase;
 
 class UlidTest extends TestCase {
@@ -97,6 +97,12 @@ class UlidTest extends TestCase {
 		$existingString = (string)$existingUlid;
 		$sut = new Ulid(init: $existingString);
 		self::assertSame($existingString, (string)$sut);
+	}
+
+	public function testBackwardCompatibleNamespaceAutoload():void {
+		$legacyClassName = "Gt\\Ulid\\Ulid";
+		$sut = new $legacyClassName();
+		self::assertInstanceOf(Ulid::class, $sut);
 	}
 
 	public function testGetDateTime():void {

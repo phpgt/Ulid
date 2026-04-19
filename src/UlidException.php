@@ -1,5 +1,5 @@
 <?php
-namespace Gt\Ulid;
+namespace GT\Ulid;
 
 use RuntimeException;
 

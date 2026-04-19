@@ -1,7 +1,7 @@
 <?php
-namespace Gt\Ulid\Test;
+namespace GT\Ulid\Test;
 
-use Gt\Ulid\Base32;
+use GT\Ulid\Base32;
 use PHPUnit\Framework\TestCase;
 
 class Base32Test extends TestCase {

@@ -27,12 +27,13 @@
 
 	"autoload": {
 		"psr-4": {
+			"GT\\Ulid\\": "./src",
 			"Gt\\Ulid\\": "./src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Gt\\Ulid\\Test\\": "./test/phpunit"
+			"GT\\Ulid\\Test\\": "./test/phpunit"
 		}
 	},
 

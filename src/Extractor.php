@@ -1,5 +1,5 @@
 <?php
-namespace Gt\Ulid;
+namespace GT\Ulid;
 
 class Extractor {
 	private Base32 $base32;
