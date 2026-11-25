@@ -3,6 +3,7 @@ namespace GT\Ulid\Test;
 
 use DateTime;
 use GT\Ulid\Ulid;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class UlidTest extends TestCase {
@@ -42,18 +43,36 @@ class UlidTest extends TestCase {
 	}
 
 	public function testTimestampSecondsConflictsWithLegacyTimestamp():void {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		new Ulid(timestamp: 0, timestampSeconds: 0);
 	}
 
 	public function testTimestampSecondsConflictsWithExistingUlid():void {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		new Ulid(init: (string)new Ulid(), timestampSeconds: 0);
 	}
 
 	public function testTimestampSecondsMustFitTimestampLength():void {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		new Ulid(timestampLength: 2, timestampSeconds: 1.024);
+	}
+
+	public function testTimestampSecondsRejectsNegativeValuesBeforeRounding():void {
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Timestamp out of range");
+		new Ulid(timestampSeconds: -0.0001);
+	}
+
+	public function testTimestampSecondsRejectsNonFiniteValues():void {
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Timestamp out of range");
+		new Ulid(timestampSeconds: NAN);
+	}
+
+	public function testTimestampSecondsRejectsMillisecondIntegerOverflow():void {
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Timestamp out of range");
+		new Ulid(timestampSeconds: intdiv(PHP_INT_MAX, 1000) + 1);
 	}
 
 	public function testGetHexTimestamp_lexSorting():void {
