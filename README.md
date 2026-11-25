@@ -35,6 +35,22 @@ $exampleDataSource->create(new Person(
 ));
 ```
 
+## Explicit timestamps
+
+```php
+$ulid = new Ulid('pet', timestampSeconds: 1712345678.123);
+$seconds = $ulid->getTimestampSeconds(); // 1712345678.123
+$milliseconds = $ulid->getTimestampMilliseconds(); // 1712345678123
+```
+
+`timestampSeconds` accepts integer or fractional Unix seconds and rounds to the
+nearest millisecond. Supply it on its own when choosing an explicit timestamp.
+
+The second constructor argument, `timestamp`, still accepts Unix milliseconds
+but is deprecated. To migrate, use `timestampSeconds: $milliseconds / 1000`.
+Replace calls to the deprecated `getTimestamp()` with
+`getTimestampMilliseconds()` to keep the same integer value.
+
 # Proudly sponsored by
 
 [JetBrains Open Source sponsorship program](https://www.jetbrains.com/community/opensource/)

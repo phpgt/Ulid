@@ -23,6 +23,39 @@ class UlidTest extends TestCase {
 		self::assertSame($timestamp, $sut->getTimestamp());
 	}
 
+	public function testExplicitTimestampUnits():void {
+		$legacy = new Ulid("customer", 1712345678124);
+		$sut = new Ulid("customer", timestampSeconds: 1712345678.1236);
+		self::assertSame(1712345678124, $sut->getTimestamp());
+		self::assertSame(1712345678124, $sut->getTimestampMilliseconds());
+		self::assertSame(1712345678.124, $sut->getTimestampSeconds());
+		self::assertSame($legacy->getTimestampString(), $sut->getTimestampString());
+
+		$parsed = new Ulid(init: (string)$sut);
+		self::assertSame($sut->getTimestampMilliseconds(), $parsed->getTimestampMilliseconds());
+	}
+
+	public function testIntegerTimestampSeconds():void {
+		$sut = new Ulid(timestampSeconds: 1712345678);
+		self::assertSame(1712345678000, $sut->getTimestampMilliseconds());
+		self::assertSame(1712345678.0, $sut->getTimestampSeconds());
+	}
+
+	public function testTimestampSecondsConflictsWithLegacyTimestamp():void {
+		$this->expectException(\InvalidArgumentException::class);
+		new Ulid(timestamp: 0, timestampSeconds: 0);
+	}
+
+	public function testTimestampSecondsConflictsWithExistingUlid():void {
+		$this->expectException(\InvalidArgumentException::class);
+		new Ulid(init: (string)new Ulid(), timestampSeconds: 0);
+	}
+
+	public function testTimestampSecondsMustFitTimestampLength():void {
+		$this->expectException(\InvalidArgumentException::class);
+		new Ulid(timestampLength: 2, timestampSeconds: 1.024);
+	}
+
 	public function testGetHexTimestamp_lexSorting():void {
 		$lastHex = null;
 		for($year = 1970; $year < 2676; $year++) {
